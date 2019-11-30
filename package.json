@@ -1,0 +1,19 @@
+{
+  "name": "set-time-series",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "test": "jest --coverage"
+  },
+  "repository": "https://github.com/Jinhongli/set-time-series.git",
+  "author": "Jinhongli <jhl211@163.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0"
+  }
+}
