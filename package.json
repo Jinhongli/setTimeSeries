@@ -2,6 +2,7 @@
   "name": "set-time-series",
   "version": "1.0.0",
   "main": "lib/index.js",
+  "module": "src/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
     "test": "jest --coverage"
