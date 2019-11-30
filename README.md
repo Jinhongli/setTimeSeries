@@ -4,6 +4,8 @@ Set a timer which can execute a series of function at different intervals.
 
 🏊‍♂️🕜🚴‍♂️🕑🏃‍♂️🕔🥇
 
+![build size](https://badgen.net/bundlephobia/minzip/set-time-series)
+
 ## Syntax
 
 `setTimeSeries(series, [options])`
@@ -73,7 +75,7 @@ cancel();
 
 ### Async function
 
-You can also call async function throw:
+You can also call async function via:
 
 ```js
 const series = [
