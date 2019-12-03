@@ -4,7 +4,9 @@ Set a timer which can execute a series of function at different intervals.
 
 🏊‍♂️🕜🚴‍♂️🕑🏃‍♂️🕔🥇
 
-![build size](https://badgen.net/bundlephobia/minzip/set-time-series)
+![version](https://badgen.net/npm/v/set-time-series)
+![code coverage](https://badgen.net/codecov/c/github/jinhongli/set-time-series)
+![minzip size](https://badgen.net/bundlephobia/minzip/set-time-series)
 
 ## Syntax
 
