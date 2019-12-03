@@ -1,0 +1,18 @@
+name: Codecov
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Codecov
+      uses: codecov/codecov-action@v1.0.4
+      with:
+        token: 5f6582a6-e7d3-4ea1-aacf-cb881b43dddc
