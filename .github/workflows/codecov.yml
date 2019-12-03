@@ -1,18 +1,17 @@
 name: Codecov
-
-on:
-  push:
-    branches:
-    - master
+on: [push]
 
 jobs:
-  build:
-
+  run:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@master
-    - name: Codecov
-      uses: codecov/codecov-action@v1.0.4
-      with:
-        token: 5f6582a6-e7d3-4ea1-aacf-cb881b43dddc
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.4
+        with:
+          token: 5f6582a6-e7d3-4ea1-aacf-cb881b43dddc
