@@ -5,7 +5,7 @@
   "module": "src/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "test": "jest --coverage --watch"
+    "test": "jest --coverage"
   },
   "repository": "https://github.com/Jinhongli/set-time-series.git",
   "author": "Jinhongli <jhl211@163.com>",
