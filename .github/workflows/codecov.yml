@@ -9,8 +9,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm run test
+      - run: yarn install
+      - run: yarn test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.4
         with:
