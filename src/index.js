@@ -44,13 +44,9 @@ const setTimeSeries = (series = [], { defaultPause = 0 } = {}) => {
         if (isPromiseLike(result)) {
           // return promise
           result.then(next, cancel);
-        } else if (isBoolean(result)) {
-          // return boolean
-          if (result) {
-            next();
-          } else {
-            cancel();
-          }
+        } else if (isBoolean(result) && !result) {
+          // return false
+          cancel();
         } else {
           next();
         }
