@@ -25,8 +25,6 @@ It will return a **cancel** method whick you can cancel the rest series of funct
 
 ## How to use
 
-If you use Webpack or Rollup,
-
 ### Basic
 
 ```js
@@ -83,7 +81,7 @@ You can also call async function via:
 const series = [
   () => {
     // 1. return a Promise
-    return fetch();
+    return fetch(api);
   },
   300,
   next => {
@@ -92,6 +90,22 @@ const series = [
   },
   500,
   () => {},
+];
+setTimeSeries(series);
+```
+
+## Caveats
+
+Function in the `series` list will only accept one optional argument `next()`. So DON'T do this:
+
+```js
+const fn1 = (a,b) => { ... }
+const fn2 = (c,d) => { ... }
+const fn3 = (e,f) => { ... }
+const series = [
+  fn1,
+  fn2,
+  fn3
 ];
 setTimeSeries(series);
 ```
