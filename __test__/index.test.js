@@ -1,4 +1,4 @@
-import setTimeSeries from '../src';
+const { default: setTimeSeries } = require('../src');
 
 let fn;
 let wrapedFn;
@@ -14,7 +14,7 @@ afterEach(() => {
   wrapedFn = null;
 });
 
-test('should call fns in right order', done => {
+test('should call fns in right order', (done) => {
   setTimeSeries([
     wrapedFn,
     wrapedFn,
@@ -38,7 +38,7 @@ test('should not throw error without functions', () => {
   }).not.toThrow();
 });
 
-test('should call fns with specified interval', done => {
+test('should call fns with specified interval', (done) => {
   setTimeSeries([
     100,
     wrapedFn,
@@ -61,7 +61,7 @@ test('should call fns with specified interval', done => {
   ]);
 });
 
-test('should ignore other types except number & function', done => {
+test('should ignore other types except number & function', (done) => {
   expect(() => {
     setTimeSeries([
       100,
@@ -89,7 +89,7 @@ test('should ignore other types except number & function', done => {
   }).not.toThrow();
 });
 
-test('should call fns with default interval', done => {
+test('should call fns with default interval', (done) => {
   setTimeSeries(
     [
       wrapedFn,
@@ -110,7 +110,7 @@ test('should call fns with default interval', done => {
   );
 });
 
-test('should cancel timer by returned "cancel()" method', done => {
+test('should cancel timer by returned "cancel()" method', (done) => {
   const cancel = setTimeSeries([
     wrapedFn,
     500,
@@ -127,7 +127,7 @@ test('should cancel timer by returned "cancel()" method', done => {
   }, 1200);
 });
 
-test('should cancel timer by throw an error', done => {
+test('should cancel timer by throw an error', (done) => {
   setTimeSeries([
     () => {
       fn();
@@ -144,50 +144,30 @@ test('should cancel timer by throw an error', done => {
   }, 1200);
 });
 
-test('should control timer when task function accept "next" method', done => {
+test('should control timer when task function accept "next" method', (done) => {
   setTimeSeries([
-    next => {
+    (next) => {
       fn();
-      setTimeout(next, 500);
+      setTimeout(next, 200);
     },
-    500,
+    200,
     wrapedFn,
-    500,
+    200,
     wrapedFn,
     () => {
       expect(fn).toHaveBeenCalledTimes(3);
       expect(
         fn.mock.results[1].value - fn.mock.results[0].value
-      ).toBeGreaterThanOrEqual(1000);
+      ).toBeGreaterThanOrEqual(400);
       expect(
         fn.mock.results[2].value - fn.mock.results[1].value
-      ).toBeGreaterThanOrEqual(500);
+      ).toBeGreaterThanOrEqual(200);
       done();
     },
   ]);
 });
 
-test('should control timer when task function return Boolean', done => {
-  setTimeSeries([
-    () => {
-      fn();
-      return true;
-    },
-    500,
-    () => {
-      fn();
-      return false;
-    },
-    500,
-    wrapedFn,
-  ]);
-  setTimeout(() => {
-    expect(fn).toHaveBeenCalledTimes(2);
-    done();
-  }, 1200);
-});
-
-test('should control timer when task function return Promise', done => {
+test('should control timer when task function return Promise', (done) => {
   setTimeSeries([
     () => {
       fn();
@@ -205,4 +185,41 @@ test('should control timer when task function return Promise', done => {
     expect(fn).toHaveBeenCalledTimes(2);
     done();
   }, 1200);
+});
+
+test('should transfer data correctly in sync function', (done) => {
+  setTimeSeries([
+    () => 1,
+    (next, data) => {
+      expect(data).toBe(1);
+      next(2);
+    },
+    (next, data) => {
+      expect(data).toBe(2);
+      next(3);
+    },
+    () => 4,
+    (next, data) => {
+      expect(data).toBe(4);
+      done();
+    },
+  ]);
+});
+
+test('should transfer data correctly in async function', (done) => {
+  setTimeSeries([
+    (next) => {
+      setTimeout(() => {
+        next(1);
+      }, 200);
+    },
+    (next, data) => {
+      expect(data).toBe(1);
+      return Promise.resolve(2);
+    },
+    (next, data) => {
+      expect(data).toBe(2);
+      done();
+    },
+  ]);
 });
